@@ -25,12 +25,13 @@
 
             <div class="box">
                 <div class="complaint-form">
-                    <form action="https://formspree.io/f/mbjwvllg" method="post" >
+                    <form name="submit-to-google-sheet" >
                         <h3>File a complaint</h3>
                         <input class="name" type="text" id="name" placeholder="Your Name" name="name" required>
                         <input class="email" type="email" id="email" placeholder="Email" name="email" required>
                         <input class="cor" type="text" id="phone_no" placeholder="Phone No." name="phone" required>
                         <textarea class="complaint" id="message" rows="4" cols="4" placeholder="Complaint" name="complaint" required></textarea>
+                        <span class="submit-text" id="submit"></span>
                         <button type="submit" value="submit">Submit</button>
                     </form>
                 </div>
@@ -219,8 +220,24 @@
                     this.classList.toggle('active')
                 })
             }
+            
 
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz0v5qB959C3qbShkgJlXBHBNv6y4K4hvbQtYDXySf-4q61uIQjfrh5pFYiGU3hztzA/exec'
+            const form = document.forms['submit-to-google-sheet']
+            const submit = document.getElementById("submit")
 
+            form.addEventListener('submit', e => {
+                e.preventDefault()
+                fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    submit.innerHTML = "Submitted!"
+                    setTimeout(function(){
+                        submit.innerHTML = ""
+                    },5000)
+                    form.reset()
+                })
+                .catch(error => console.error('Error!', error.message))
+            })
 
 
         </script>

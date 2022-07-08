@@ -115,6 +115,11 @@ form input, form textarea{
     font-size: 16px;
     border-radius: 8px;
 }
+.submit-text{
+    margin-top: 4px;
+    color: red;
+    margin-left: 10px;
+}
 form button {
     width: 140px;
     border: 0;
